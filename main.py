@@ -12,6 +12,7 @@ THRUST = 0.5
 ROTATION_SPEED = 2
 FUEL = 100
 
+
 # Colors
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
