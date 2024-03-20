@@ -1,4 +1,4 @@
-from functions import generer_plateforme
+from functions import *
 import pygame
 
 pygame.init()
@@ -12,7 +12,8 @@ background_color = (0, 0, 0)
 
 running = True
 screen.fill(background_color)
-x1, x2, largeur_plateforme = generer_plateforme(screen)
+x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
+generer_montagne(screen, x1, x2, y1, y2)
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
