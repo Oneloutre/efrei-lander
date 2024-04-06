@@ -2,8 +2,9 @@ import pygame
 import random
 import pygame.gfxdraw
 
+
 global couleur_blanc
-couleur_blanc = (230, 140, 190)
+couleur_blanc = (255, 255, 255)
 global couleur_verte
 couleur_verte = (100, 230, 30)
 global largeur_plateforme
@@ -34,7 +35,7 @@ def generer_plateforme(screen):
     while abs(y2 - y1) < hauteur_plateforme:
         y2 = random.randint(620, screen.get_height() - hauteur_plateforme)
 
-    pygame.draw.rect(screen, couleur_verte, [x2, y2, largeur_plateforme, hauteur_plateforme])
+    pygame.draw.rect(screen, couleur_blanc, [x2, y2, largeur_plateforme, hauteur_plateforme])
     return x1, x2, y1, y2, hauteur_plateforme
 
 
@@ -45,3 +46,12 @@ def generer_montagne(screen, x1, x2, y1, y2):
 
     # Draw the bezier curve
     pygame.gfxdraw.bezier(screen, points, 100, couleur_verte)
+
+def fill_mountain(screen):
+    for i in range(screen.get_width()-1):
+        pixel_xy = i, screen.get_height()-1
+        while screen.get_at(pixel_xy) != couleur_verte and screen.get_at(pixel_xy) != couleur_blanc:
+            pixel_xy = pixel_xy[0], pixel_xy[1]-1
+        pygame.draw.line(screen, couleur_verte, pixel_xy, (i, screen.get_height()-1))
+
+
