@@ -15,10 +15,10 @@ running = True
 screen.fill(background_color)
 x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
 generer_montagne(screen, x1, x2, y1, y2)
-generer_montagne(screen, x2, 1280, y2, 550)
+generer_montagne(screen, x2, 1280, y2, 650)
 generer_montagne(screen, 0-largeur_plateforme, x1, 500, y1)
 
-
+fill_mountain(screen)
 
 
 while running:
@@ -27,5 +27,5 @@ while running:
             running = False
     pygame.display.update()
 
-pygame.quit()
 
+pygame.quit()
