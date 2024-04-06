@@ -10,6 +10,7 @@ screen = pygame.display.set_mode((size_x, size_y))
 pygame.display.set_caption("Efrei Lander")
 background_color = (0, 0, 0)
 
+
 running = True
 screen.fill(background_color)
 x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
