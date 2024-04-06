@@ -22,7 +22,7 @@ def bezier(surf, b, samples, color):
     pts = [ptOnCurve(b, i/samples) for i in range(samples+1)]
     pygame.draw.lines(surf, color, False, pts, hauteur_plateforme)
 
-def generer_plateforme(screen, plateformes_compteur=2):
+def generer_plateforme(screen):
     # Generate x1 and x2 such that x1 is always less than x2
     x1 = random.randint(0, screen.get_width() - 2 * largeur_plateforme - 85)
     x2 = random.randint(x1 + largeur_plateforme + 85, screen.get_width() - largeur_plateforme)
