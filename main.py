@@ -1,13 +1,23 @@
 from functions import *
 import pygame
-
+from variables import *
 pygame.init()
 
 # Création de la fenêtre de jeu
-size_x = 1280
-size_y = 720
+size_x = get_vars("variables.json")["screen_width"]
+size_y = get_vars("variables.json")["screen_height"]
+
 screen = pygame.display.set_mode((size_x, size_y))
 pygame.display.set_caption("Efrei Lander")
+
+
+# Will be deleted because of the background asset
+
+background_color = (0, 0, 0)
+
+#Pour les étoiles
+etoiles = [(random.randint(0, size_x), random.randint(0, size_y)) for _ in range(100)]
+
 background_image = pygame.image.load("Assets/space.png").convert()
 
 # Coordonnées de la lune
@@ -16,6 +26,7 @@ y_lune = 100
 
 # Rayon de la lune
 rayon_lune = 50
+
 
 image_lune = pygame.image.load('Assets/planet.png').convert_alpha()
 image_lune = pygame.transform.scale(image_lune, (rayon_lune*2, rayon_lune*2))  # Ajuster la taille de l'image
