@@ -20,7 +20,7 @@ y_lune = 100
 # Rayon de la lune
 rayon_lune = 50
 
-image_lune = pygame.image.load('lune.png').convert_alpha()
+image_lune = pygame.image.load('Assets/lune.png').convert_alpha()
 image_lune = pygame.transform.scale(image_lune, (rayon_lune*2, rayon_lune*2))  # Ajuster la taille de l'image
 
 
