@@ -42,4 +42,5 @@ while running:
     pygame.display.update()
     screen.blit(image_lune, (x_lune - rayon_lune, y_lune - rayon_lune))
 
+
 pygame.quit()
