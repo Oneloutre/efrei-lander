@@ -1,0 +1,31 @@
+{
+    "variables" : {
+        "spaceship" : {
+            "mass" : 2000,
+            "fuel" : 1000,
+            "thrust" : 100
+
+        },
+        "color" : {
+            "platform" : {
+                "r" : 255,
+                "g" :  255,
+                "b" : 255
+                },
+            "mountain" : {
+                "r" : 169,
+                "g" : 153,
+                "b" : 149
+                }
+        },
+        "environment" : {
+            "platform_width" : 100,
+            "platform_height" : 5,
+            "gravity": "1,62"
+        },
+        "screen_size" : {
+            "height" : 720,
+            "width" : 1080
+        }
+    }
+}

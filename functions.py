@@ -1,17 +1,31 @@
 import pygame
 import random
 import pygame.gfxdraw
+from variables import *
+
+# Get variables from variables.json
+
+r_platform = get_vars("variables.json")["platform_color_r"]
+g_platform = get_vars("variables.json")["platform_color_g"]
+b_platform = get_vars("variables.json")["platform_color_b"]
+
+r_mountain = get_vars("variables.json")["mountain_color_r"]
+g_mountain = get_vars("variables.json")["mountain_color_g"]
+b_mountain = get_vars("variables.json")["mountain_color_b"]
+
+largeur_plateforme = get_vars("variables.json")["platform_width"]
+hauteur_plateforme = get_vars("variables.json")["platform_height"]
+
+couleur_blanc = (r_platform, g_platform, b_platform)
+couleur_montagne = (r_mountain, g_mountain, b_mountain)
+
+spaceship_mass = get_vars("variables.json")["spaceship_mass"]
+spaceship_fuel = get_vars("variables.json")["spaceship_fuel"]
+spaceship_thrust = get_vars("variables.json")["spaceship_thrust"]
+
+#          ----------------------------------------------------------------------------
 
 
-
-global couleur_blanc
-couleur_blanc = (255, 255, 255)
-global couleur_montagne
-couleur_montagne = (169, 153, 149)
-global largeur_plateforme
-largeur_plateforme = 100
-global hauteur_plateforme
-hauteur_plateforme = 5  # Hauteur fixe
 
 def ptOnCurve(b, t):
     q = b.copy()
