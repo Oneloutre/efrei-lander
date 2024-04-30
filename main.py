@@ -8,7 +8,7 @@ size_x = 1280
 size_y = 720
 screen = pygame.display.set_mode((size_x, size_y))
 pygame.display.set_caption("Efrei Lander")
-background_color = (0, 0, 0)
+background_image = pygame.image.load('Assets/space.png').convert()
 
 #Pour les étoiles
 etoiles = [(random.randint(0, size_x), random.randint(0, size_y)) for _ in range(100)]
@@ -26,7 +26,7 @@ image_lune = pygame.transform.scale(image_lune, (rayon_lune*2, rayon_lune*2))  #
 
 
 running = True
-screen.fill(background_color)
+
 x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
 generer_montagne(screen, x1, x2, y1, y2)
 generer_montagne(screen, x2, 1280, y2, 650)
@@ -42,6 +42,7 @@ while running:
     pygame.display.update()
     for x, y in etoiles:
         pygame.draw.circle(screen, (255, 255, 255), (x, y), 1)
+    screen.blit(background_image,(0,0))
     screen.blit(image_lune, (x_lune - rayon_lune, y_lune - rayon_lune))
 
 pygame.quit()
