@@ -54,3 +54,14 @@ def fill_mountain(screen):
         while (screen.get_at(pixel_xy) != couleur_montagne) and (screen.get_at(pixel_xy) != couleur_blanc):
             pixel_xy = pixel_xy[0], pixel_xy[1]-1
         pygame.draw.line(screen, couleur_montagne, pixel_xy, (i, screen.get_height()-1))
+
+def get_relief_coord(screen):
+    relief_coord=[]
+    for i in range(screen.get_width()-1):
+        pixel_xy = i, screen.get_height()-1
+        while (screen.get_at(pixel_xy) != (0,0,0)) and (screen.get_at(pixel_xy) != couleur_blanc):
+            pixel_xy = pixel_xy[0], pixel_xy[1]-1
+        relief_coord.append(pixel_xy[1]+1)
+    return relief_coord
+
+

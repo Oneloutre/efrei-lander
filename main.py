@@ -10,9 +10,6 @@ screen = pygame.display.set_mode((size_x, size_y))
 pygame.display.set_caption("Efrei Lander")
 background_color = (0, 0, 0)
 
-#Pour les étoiles
-etoiles = [(random.randint(0, size_x), random.randint(0, size_y)) for _ in range(100)]
-
 # Coordonnées de la lune
 x_lune = size_x - 100
 y_lune = 100
@@ -33,15 +30,13 @@ generer_montagne(screen, x2, 1280, y2, 650)
 generer_montagne(screen, 0-largeur_plateforme, x1, 500, y1)
 
 fill_mountain(screen)
-
+print(get_relief_coord(screen))
 
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
     pygame.display.update()
-    for x, y in etoiles:
-        pygame.draw.circle(screen, (255, 255, 255), (x, y), 1)
     screen.blit(image_lune, (x_lune - rayon_lune, y_lune - rayon_lune))
 
 pygame.quit()
