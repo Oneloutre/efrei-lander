@@ -30,7 +30,10 @@ generer_montagne(screen, x2, 1280, y2, 650)
 generer_montagne(screen, 0-largeur_plateforme, x1, 500, y1)
 
 fill_mountain(screen)
-print(get_relief_coord(screen))
+mountain_coords = get_relief_coord(screen)
+print(mountain_coords)
+for i in range(len(mountain_coords)):
+    pygame.screen.set_at((i, mountain_coords[i]), (255, 0, 0))
 
 while running:
     for event in pygame.event.get():
