@@ -25,7 +25,7 @@ y_lune = 100
 rayon_lune = 50
 
 image_lune = pygame.image.load('Assets/planet.png').convert_alpha()
-image_lune = pygame.transform.scale(image_lune, (rayon_lune*2, rayon_lune*2))  # Ajuster la taille de l'image
+#image_lune = pygame.transform.scale(image_lune, (rayon_lune*2, rayon_lune*2))  # Ajuster la taille de l'image
 
 font = pygame.font.Font("Assets/ethnocentric rg.otf",16)
 
@@ -42,6 +42,11 @@ while running:
     clock.tick(60)
     screen.blit(background_image, (0, 0))
     screen.blit(fuel_image, (40, 40))
+    screen.blit(image_lune, (x_lune - rayon_lune, y_lune - rayon_lune))
+    text_fuel = font.render(str(fuel), True, (255, 255, 255))
+    fuel_rect = text_fuel.get_rect()
+    fuel_rect.topleft = (140, 60)
+    screen.blit(text_fuel, fuel_rect)
     dessiner_plateforme(x1, x2, y1, y2, hauteur_plateforme,screen)
     generer_montagne(screen, x1, x2, y1, y2)
     generer_montagne(screen, x2, 1280, y2, 650)
@@ -63,13 +68,10 @@ while running:
         fuel-=1
         pygame.time.delay(100)
     pygame.display.update()
-    screen.blit(image_lune, (x_lune - rayon_lune, y_lune - rayon_lune))
-    text_fuel = font.render(str(fuel),True,(255,255,255))
-    fuel_rect = text_fuel.get_rect()
 
-    fuel_rect.topleft = (140,60)
 
-    screen.blit(text_fuel,fuel_rect)
+
+
     pygame.display.flip()
 
 
