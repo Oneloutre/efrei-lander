@@ -31,6 +31,7 @@ screen = pygame.display.set_mode((size_x, size_y))
 pygame.display.set_caption("Efrei Lander")
 background_image = pygame.image.load("Assets/space.png").convert()
 fuel_image = pygame.image.load("Assets/fuel.png").convert_alpha()
+main_bg = pygame.image.load("Assets/menu bg.png").convert()
 
 # Coordonnées de la lune
 x_lune = size_x - 100
@@ -47,14 +48,54 @@ icon_rect.center = (size_x // 2, size_y // 2)
 
 #text
 font = pygame.font.Font("Assets/ethnocentric rg.otf",16)
+font_play = pygame.font.Font("Assets/ethnocentric rg.otf",30)
+font_menu = pygame.font.Font("Assets/ethnocentric rg.otf",60)
 
+
+
+
+menu_running = True
+
+while menu_running:
+    #background
+    screen.blit(main_bg, (0, 0))
+
+    #title
+
+
+    #play_text
+    play_text = font_play.render("Play", True, (255, 255, 255))
+    play_rect = play_text.get_rect()
+    play_rect.topleft = (580, size_y/2)
+    screen.blit(play_text,play_rect)
+
+    mouse_x, mouse_y = pygame.mouse.get_pos()
+
+    if play_rect.collidepoint((mouse_x, mouse_y)):
+        play_text = font_play.render("Play", True, (170, 76, 23))
+        play_rect = play_text.get_rect()
+        play_rect.topleft = (580, size_y / 2)
+        screen.blit(play_text, play_rect)
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            if play_rect.collidepoint((mouse_x, mouse_y)):
+                menu_running = False
+    pygame.display.update()
+
+
+
+
+#game
 running = True
 #platform generation
 x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
 mountain_coords = get_relief_coord(screen)
 print(mountain_coords)
 
-#game
 while running:
 
 
