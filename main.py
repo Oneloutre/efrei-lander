@@ -2,6 +2,8 @@ from functions import *
 import pygame
 
 pygame.init()
+
+
 #physics
 fuel = 100
 clock = pygame.time.Clock()
@@ -21,24 +23,22 @@ fuel_image = pygame.image.load("Assets/fuel.png").convert_alpha()
 x_lune = size_x - 100
 y_lune = 100
 
-# Rayon de la lune
+# planet
 rayon_lune = 50
-
 image_lune = pygame.image.load('Assets/planet.png').convert_alpha()
-#image_lune = pygame.transform.scale(image_lune, (rayon_lune*2, rayon_lune*2))  # Ajuster la taille de l'image
 
+#text
 font = pygame.font.Font("Assets/ethnocentric rg.otf",16)
 
 running = True
-
+#platform generation
 x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
-
 mountain_coords = get_relief_coord(screen)
 print(mountain_coords)
-#for i in range(len(mountain_coords)):
-    #pygame.screen.set_at((i, mountain_coords[i]), (255, 0, 0))
 
+#game
 while running:
+
     clock.tick(60)
     screen.blit(background_image, (0, 0))
     screen.blit(fuel_image, (40, 40))
