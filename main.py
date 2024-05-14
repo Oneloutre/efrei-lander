@@ -6,6 +6,9 @@ pygame.init()
 fuel = 100
 clock = pygame.time.Clock()
 
+#controls
+z_pressed = False
+
 # Création de la fenêtre de jeu
 size_x = 1280
 size_y = 720
@@ -51,7 +54,14 @@ while running:
             running = False
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_z:
-                fuel-=1
+                z_pressed = True
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_z:
+                z_pressed = False
+
+    if z_pressed and fuel !=0:
+        fuel-=1
+        pygame.time.delay(100)
     pygame.display.update()
     screen.blit(image_lune, (x_lune - rayon_lune, y_lune - rayon_lune))
     text_fuel = font.render(str(fuel),True,(255,255,255))
