@@ -26,23 +26,28 @@ image_lune = pygame.transform.scale(image_lune, (rayon_lune*2, rayon_lune*2))  #
 font = pygame.font.Font("Assets/ethnocentric rg.otf",16)
 
 running = True
-screen.blit(background_image, (0, 0))
-screen.blit(fuel_image,(40,40))
-x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
-generer_montagne(screen, x1, x2, y1, y2)
-generer_montagne(screen, x2, 1280, y2, 650)
-generer_montagne(screen, 0-largeur_plateforme, x1, 500, y1)
 
-fill_mountain(screen)
 mountain_coords = get_relief_coord(screen)
 print(mountain_coords)
 #for i in range(len(mountain_coords)):
     #pygame.screen.set_at((i, mountain_coords[i]), (255, 0, 0))
 
 while running:
+    screen.blit(background_image, (0, 0))
+    screen.blit(fuel_image, (40, 40))
+    x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
+    generer_montagne(screen, x1, x2, y1, y2)
+    generer_montagne(screen, x2, 1280, y2, 650)
+    generer_montagne(screen, 0 - largeur_plateforme, x1, 500, y1)
+    fill_mountain(screen)
+
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_z:
+                fuel-=1
     pygame.display.update()
     screen.blit(image_lune, (x_lune - rayon_lune, y_lune - rayon_lune))
     text_fuel = font.render(str(fuel),True,(255,255,255))
@@ -51,6 +56,7 @@ while running:
     fuel_rect.topleft = (140,60)
 
     screen.blit(text_fuel,fuel_rect)
+    pygame.display.flip()
 
 
 pygame.quit()
