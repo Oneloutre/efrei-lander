@@ -30,17 +30,19 @@ def generer_plateforme(screen):
     x2 = random.randint(x1 + largeur_plateforme + 85, screen.get_width() - 2*largeur_plateforme)
 
     y1 = random.randint(620, screen.get_height() - hauteur_plateforme)
-    pygame.draw.rect(screen, couleur_blanc, [x1, y1, largeur_plateforme, hauteur_plateforme])
+
 
     y2=random.randint(620, screen.get_height() - hauteur_plateforme)
     while abs(y2 - y1) < hauteur_plateforme:
         y2 = random.randint(620, screen.get_height() - hauteur_plateforme)
 
-    pygame.draw.rect(screen, couleur_blanc, [x2, y2, largeur_plateforme, hauteur_plateforme])
+
     return x1, x2, y1, y2, hauteur_plateforme
 
 
-
+def dessiner_plateforme(x1, x2, y1, y2, hauteur_plateforme,screen):
+    pygame.draw.rect(screen, couleur_blanc, [x1, y1, largeur_plateforme, hauteur_plateforme])
+    pygame.draw.rect(screen, couleur_blanc, [x2, y2, largeur_plateforme, hauteur_plateforme])
 
 def generer_montagne(screen, x1, x2, y1, y2):
     points = [(x1+largeur_plateforme, y1), ((x1 + x2) // 2, min(y1, y2) - 50), (x2, y2)]
@@ -54,6 +56,7 @@ def fill_mountain(screen):
         while (screen.get_at(pixel_xy) != couleur_montagne) and (screen.get_at(pixel_xy) != couleur_blanc):
             pixel_xy = pixel_xy[0], pixel_xy[1]-1
         pygame.draw.line(screen, couleur_montagne, pixel_xy, (i, screen.get_height()-1))
+
 
 def get_relief_coord(screen):
     relief_coord=[]

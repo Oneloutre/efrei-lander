@@ -4,6 +4,7 @@ import pygame
 pygame.init()
 #physics
 fuel = 100
+clock = pygame.time.Clock()
 
 # Création de la fenêtre de jeu
 size_x = 1280
@@ -27,15 +28,18 @@ font = pygame.font.Font("Assets/ethnocentric rg.otf",16)
 
 running = True
 
+x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
+
 mountain_coords = get_relief_coord(screen)
 print(mountain_coords)
 #for i in range(len(mountain_coords)):
     #pygame.screen.set_at((i, mountain_coords[i]), (255, 0, 0))
 
 while running:
+    clock.tick(60)
     screen.blit(background_image, (0, 0))
     screen.blit(fuel_image, (40, 40))
-    x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
+    dessiner_plateforme(x1, x2, y1, y2, hauteur_plateforme,screen)
     generer_montagne(screen, x1, x2, y1, y2)
     generer_montagne(screen, x2, 1280, y2, 650)
     generer_montagne(screen, 0 - largeur_plateforme, x1, 500, y1)
@@ -57,6 +61,7 @@ while running:
 
     screen.blit(text_fuel,fuel_rect)
     pygame.display.flip()
+
 
 
 pygame.quit()
