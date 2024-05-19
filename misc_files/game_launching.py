@@ -6,7 +6,6 @@ import math
 size_x = get_var("screen_width")
 size_y = get_var("screen_height")
 
-print(type(size_x))
 screen = pygame.display.set_mode((size_x, size_y))
 #Assets
 background_image = pygame.image.load("Assets/space.png").convert()
@@ -56,7 +55,6 @@ def game_launching():
     screen.blit(background_image, (0, 0))
     x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
     mountain_coords = get_relief_coord(screen)
-    print(mountain_coords)
     largeur_plateforme = get_var("platform_width")
 
     while running:
@@ -103,7 +101,7 @@ def game_launching():
 
         if z_pressed and fuel != 0:
             fuel -= 1
-            pygame.time.delay(100)
+            pygame.time.delay(30)
         pygame.display.update()
         if left_pressed:
             angle += 1
@@ -113,7 +111,6 @@ def game_launching():
         if up_pressed:
             velocity_x = -speed * math.sin(math.radians(angle))
             velocity_y = -speed * math.cos(math.radians(angle))
-            print(math.sin(math.radians(angle)))
             user_impact = 0.2
 
         velocity_y += gravity

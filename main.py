@@ -3,7 +3,7 @@ pygame.init()
 from misc_files.game_launching import *
 import sys
 import math
-from game_launching import game_launching
+bg_music = pygame.mixer.Sound("Assets/music_bg.wav")
 
 
 
