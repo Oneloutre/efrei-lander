@@ -133,6 +133,8 @@ def game():
     angle = 0
     speed = 5
     user_impact = 0
+
+
     right_pressed = False
     left_pressed = False
     up_pressed = False
