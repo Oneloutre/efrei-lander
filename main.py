@@ -21,6 +21,7 @@ background_image = pygame.image.load("Assets/space.png").convert()
 fuel_image = pygame.image.load("Assets/fuel.png").convert_alpha()
 main_bg = pygame.image.load("Assets/menu bg.png").convert()
 guide_img = pygame.image.load("Assets/guide.png").convert()
+btn_img = pygame.image.load("Assets/btn.png").convert_alpha()
 # Coordonnées de la lune
 x_lune = size_x - 100
 y_lune = 100
@@ -47,7 +48,8 @@ def main_menu():
     while menu_running:
         # background
         screen.blit(main_bg, (0, 0))
-
+        screen.blit(btn_img,(533,345))
+        screen.blit(btn_img, (533, 435))
         # title
 
         # play_text
@@ -65,13 +67,13 @@ def main_menu():
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
         if play_rect.collidepoint((mouse_x, mouse_y)):
-            play_text = font_play.render("Play", True, (17, 119, 182))
+            play_text = font_play.render("Play", True, (225 , 216, 133))
             play_rect = play_text.get_rect()
             play_rect.topleft = (580, size_y / 2)
             screen.blit(play_text, play_rect)
 
         if guide_rect.collidepoint((mouse_x, mouse_y)):
-            guide_text = font_play.render("Guide", True, (17, 119, 182))
+            guide_text = font_play.render("Guide", True, (225 , 216, 133))
             guide_rect = guide_text.get_rect()
             guide_rect.topleft = (575, 450)
             screen.blit(guide_text, guide_rect)
@@ -94,19 +96,19 @@ def guide_ui():
 
     while running:
         screen.blit(guide_img, (0, 0))
+        screen.blit(btn_img, (100, 585))
 
-
-        play_text = font_play.render("Back", True, (0, 0, 0))
+        play_text = font_play.render("Back", True, (255, 255, 255))
         play_rect = play_text.get_rect()
-        play_rect.topleft = (100, 600)
+        play_rect.topleft = (150, 600)
         screen.blit(play_text, play_rect)
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
         if play_rect.collidepoint((mouse_x, mouse_y)):
-            play_text = font_play.render("Back", True, (17, 119, 182))
+            play_text = font_play.render("Back", True, (225 , 216, 133))
             play_rect = play_text.get_rect()
-            play_rect.topleft = (100, 600)
+            play_rect.topleft = (150, 600)
             screen.blit(play_text, play_rect)
 
         for event in pygame.event.get():
@@ -206,7 +208,7 @@ def game():
         icon_rect.y += velocity_y
 
         pygame.display.flip()
-        clock.tick(60)
+
 
 
 
