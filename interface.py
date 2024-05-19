@@ -28,5 +28,5 @@ def guide_ui(screen,font):
                 pygame.quit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if play_rect.collidepoint((mouse_x, mouse_y)):
-                    return
+                    return "menu"
 
