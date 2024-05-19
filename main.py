@@ -1,11 +1,10 @@
+
 from functions import *
 import pygame
 import sys
 import math
 
-pygame.init()
-
-
+from game_launching import game_launching
 
 
 
