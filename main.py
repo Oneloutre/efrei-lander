@@ -40,6 +40,9 @@ font = pygame.font.Font("Assets/ethnocentric rg.otf",16)
 font_play = pygame.font.Font("Assets/ethnocentric rg.otf",30)
 font_menu = pygame.font.Font("Assets/ethnocentric rg.otf",60)
 
+#sounds
+
+bg_music = pygame.mixer.Sound('Assets/music_bg.wav')
 
 
 def main_menu():
@@ -214,6 +217,7 @@ def game():
 
 if __name__ == '__main__':
     while True:
+        bg_music.play()
         next_action = main_menu()
         if next_action == "game":
             game()
