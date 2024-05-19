@@ -20,7 +20,7 @@
         "environment": {
             "platform_width": 100,
             "platform_height": 5,
-            "gravity": "1,62",
+            "gravity": 0.3,
             "moon": {
                 "radius": 50,
                 "position": {
@@ -31,7 +31,7 @@
         },
         "screen_size": {
             "height": 720,
-            "width": 1080
+            "width": 1280
         }
     }
 }

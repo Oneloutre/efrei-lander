@@ -54,7 +54,6 @@ def bezier(surf, b, samples, color):
 
 
 def generer_plateforme(screen):
-    couleur_blanc = platform_reloading()
     largeur_plateforme, hauteur_plateforme = platform_properties()
     # Generate x1 and x2 such that x1 is always less than x2
     x1 = random.randint(0, screen.get_width() - 3 * largeur_plateforme - 85)
@@ -71,7 +70,9 @@ def generer_plateforme(screen):
     return x1, x2, y1, y2, hauteur_plateforme
 
 
-def dessiner_plateforme(x1, x2, y1, y2, hauteur_plateforme,screen):
+def dessiner_plateforme(x1, x2, y1, y2, screen):
+    couleur_blanc = platform_reloading()
+    largeur_plateforme, hauteur_plateforme = platform_properties()
     pygame.draw.rect(screen, couleur_blanc, [x1, y1, largeur_plateforme, hauteur_plateforme])
     pygame.draw.rect(screen, couleur_blanc, [x2, y2, largeur_plateforme, hauteur_plateforme])
 
@@ -85,10 +86,10 @@ def generer_montagne(screen, x1, x2, y1, y2):
 
 
 def fill_mountain(screen):
+    couleur_montagne = mountain_reloading()
+    couleur_blanc = platform_reloading()
     for i in range(screen.get_width()-1):
         pixel_xy = i, screen.get_height()-1
-        couleur_montagne = mountain_reloading()
-        couleur_blanc = platform_reloading()
         while (screen.get_at(pixel_xy) != couleur_montagne) and (screen.get_at(pixel_xy) != couleur_blanc):
             pixel_xy = pixel_xy[0], pixel_xy[1]-1
         pygame.draw.line(screen, couleur_montagne, pixel_xy, (i, screen.get_height()-1))
