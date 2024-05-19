@@ -4,7 +4,7 @@ import pygame
 
 def guide_ui(screen,font):
     running = True
-    guide_img = pygame.image.load("Assets/guide.png").convert()
+    guide_img = pygame.image.load("../Assets/guide.png").convert()
 
 
 
