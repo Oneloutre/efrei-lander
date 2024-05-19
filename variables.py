@@ -1,55 +1,50 @@
 import json
 
 
-def get_vars(file_path):
-    with open(file_path, 'r') as file:
+def get_var(var):
+    with open ("variables.json", 'r') as file:
         data = json.load(file)
 
-    spaceship_mass = data["variables"]["spaceship"]["mass"]
-    spaceship_fuel = data["variables"]["spaceship"]["fuel"]
-    spaceship_thrust = data["variables"]["spaceship"]["thrust"]
-
-    platform_color_r = data["variables"]["color"]["platform"]["r"]
-    platform_color_g = data["variables"]["color"]["platform"]["g"]
-    platform_color_b = data["variables"]["color"]["platform"]["b"]
-
-    mountain_color_r = data["variables"]["color"]["mountain"]["r"]
-    mountain_color_g = data["variables"]["color"]["mountain"]["g"]
-    mountain_color_b = data["variables"]["color"]["mountain"]["b"]
-
-    platform_width = data["variables"]["environment"]["platform_width"]
-    platform_height = data["variables"]["environment"]["platform_height"]
-    gravity = data["variables"]["environment"]["gravity"]
-
-    screen_height = data["variables"]["screen_size"]["height"]
-    screen_width = data["variables"]["screen_size"]["width"]
-    moon_radius = data["variables"]["environment"]["moon"]["radius"]
-    moon_pos_x = data["variables"]["environment"]["moon"]["position"]["x"]
-    moon_pos_y = data["variables"]["environment"]["moon"]["position"]["y"]
-
-    return {
-        "spaceship_mass": spaceship_mass,
-        "spaceship_fuel": spaceship_fuel,
-        "spaceship_thrust": spaceship_thrust,
-        "platform_color_r": platform_color_r,
-        "platform_color_g": platform_color_g,
-        "platform_color_b": platform_color_b,
-        "mountain_color_r": mountain_color_r,
-        "mountain_color_g": mountain_color_g,
-        "mountain_color_b": mountain_color_b,
-        "platform_width": platform_width,
-        "platform_height": platform_height,
-        "gravity": gravity,
-        "screen_height": screen_height,
-        "screen_width": screen_width,
-        "moon_radius": moon_radius,
-        "moon_pos_x": moon_pos_x,
-        "moon_pos_y": moon_pos_y
-    }
+    if var == "spaceship_mass":
+        return data["variables"]["spaceship"]["mass"]
+    elif var == "spaceship_fuel":
+        return data["variables"]["spaceship"]["fuel"]
+    elif var == "spaceship_thrust":
+        return data["variables"]["spaceship"]["thrust"]
+    elif var == "platform_color_r":
+        return data["variables"]["color"]["platform"]["r"]
+    elif var == "platform_color_g":
+        return data["variables"]["color"]["platform"]["g"]
+    elif var == "platform_color_b":
+        return data["variables"]["color"]["platform"]["b"]
+    elif var == "mountain_color_r":
+        return data["variables"]["color"]["mountain"]["r"]
+    elif var == "mountain_color_g":
+        return data["variables"]["color"]["mountain"]["g"]
+    elif var == "mountain_color_b":
+        return data["variables"]["color"]["mountain"]["b"]
+    elif var == "platform_width":
+        return data["variables"]["environment"]["platform_width"]
+    elif var == "platform_height":
+        return data["variables"]["environment"]["platform_height"]
+    elif var == "gravity":
+        return data["variables"]["environment"]["gravity"]
+    elif var == "screen_height":
+        return data["variables"]["screen_size"]["height"]
+    elif var == "screen_width":
+        return data["variables"]["screen_size"]["width"]
+    elif var == "moon_radius":
+        return data["variables"]["environment"]["moon"]["radius"]
+    elif var == "moon_pos_x":
+        return data["variables"]["environment"]["moon"]["position"]["x"]
+    elif var == "moon_pos_y":
+        return data["variables"]["environment"]["moon"]["position"]["y"]
+    else:
+        return "Variable not found"
 
 
-def changing_var(var, filepath, value):
-    with open(filepath, 'r') as file:
+def changing_var(var, value):
+    with open("variables.json", 'r') as file:
         data = json.load(file)
 
     if var == "spaceship_mass":
@@ -89,5 +84,5 @@ def changing_var(var, filepath, value):
     else:
         return "Variable not found"
 
-    with open(filepath, 'w') as file:
+    with open("variables.json", 'w') as file:
         json.dump(data, file, indent=4)
