@@ -2,7 +2,7 @@ from functions import *
 import pygame
 import sys
 import math
-
+from interface import *
 pygame.init()
 
 
@@ -11,7 +11,7 @@ fuel = 100
 move_x = 0
 velocity_x = 0
 velocity_y = 0
-gravity = 0.1
+gravity = 0.3
 angle = 0
 speed = 5
 user_impact = 0
@@ -69,13 +69,28 @@ while menu_running:
     play_rect.topleft = (580, size_y/2)
     screen.blit(play_text,play_rect)
 
+    #guide_text
+    guide_text = font_play.render("Guide", True, (255, 255, 255))
+    guide_rect = guide_text.get_rect()
+    guide_rect.topleft = (575, 450)
+    screen.blit(guide_text, guide_rect)
+
+
+
+
     mouse_x, mouse_y = pygame.mouse.get_pos()
 
     if play_rect.collidepoint((mouse_x, mouse_y)):
-        play_text = font_play.render("Play", True, (170, 76, 23))
+        play_text = font_play.render("Play", True, (17,119,182))
         play_rect = play_text.get_rect()
         play_rect.topleft = (580, size_y / 2)
         screen.blit(play_text, play_rect)
+
+    if guide_rect.collidepoint((mouse_x, mouse_y)):
+        guide_text = font_play.render("Guide", True, (17,119,182))
+        guide_rect = guide_text.get_rect()
+        guide_rect.topleft = (575, 450)
+        screen.blit(guide_text, guide_rect)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -84,6 +99,9 @@ while menu_running:
         if event.type == pygame.MOUSEBUTTONDOWN:
             if play_rect.collidepoint((mouse_x, mouse_y)):
                 menu_running = False
+            elif guide_rect.collidepoint((mouse_x, mouse_y)):
+                guide_ui(screen,font_play)
+
     pygame.display.update()
 
 
@@ -162,10 +180,8 @@ while running:
     icon_rect.y += velocity_y
 
 
-
-
-    clock.tick(60)
     pygame.display.flip()
+    clock.tick(60)
 
 
 
