@@ -1,12 +1,9 @@
 import pygame
 pygame.init()
 from misc_files.game_launching import *
-import sys
-import math
 bg_music = pygame.mixer.Sound("Assets/music_bg.wav")
 game_icon = pygame.image.load("Assets/icon.png")
 pygame.display.set_icon(game_icon)
-
 
 
 if __name__ == '__main__':
@@ -24,4 +21,3 @@ if __name__ == '__main__':
                 success()
         elif next_action == "guide":
             guide_ui()
-

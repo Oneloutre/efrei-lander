@@ -51,7 +51,6 @@ def ptOnCurve(b, t):
     return round(q[0][0]), round(q[0][1])
 
 
-
 def bezier(surf, b, samples, color):
     hauteur_plateforme = platform_properties()[1]
     pts = [ptOnCurve(b, i / samples) for i in range(samples + 1)]
@@ -100,13 +99,14 @@ def fill_mountain(screen):
         pts.append(pixel_xy)
     return pts
 
+
 def get_relief_coord(screen):
     relief_coord = []
     for i in range(screen.get_width() - 1):
         pixel_xy = i, screen.get_height() - 1
-        couleur_montagne = mountain_reloading()
+        mountain_reloading()
         couleur_blanc = platform_reloading()
-        while (screen.get_at(pixel_xy) == couleur_blanc):
+        while screen.get_at(pixel_xy) == couleur_blanc:
             pixel_xy = pixel_xy[0], pixel_xy[1] - 1
         relief_coord.append(pixel_xy)
     return relief_coord
@@ -117,10 +117,9 @@ def get_platform_coord(x1, y1, x2, y2):
     platform_prop = platform_properties()
     platform_height = platform_prop[1]
     platform_width = platform_prop[0]
-    for i in range(-10,platform_width+10):
-        pixel_xy1 = x1+i, y1+platform_height-10
-        pixel_xy2 = x2-i, y2+platform_height-10
+    for i in range(-10, platform_width + 10):
+        pixel_xy1 = x1 + i, y1 + platform_height - 10
+        pixel_xy2 = x2 - i, y2 + platform_height - 10
         coords.append(pixel_xy1)
         coords.append(pixel_xy2)
     return coords
-

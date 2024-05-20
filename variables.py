@@ -2,7 +2,7 @@ import json
 
 
 def get_var(var):
-    with open ("variables.json", 'r') as file:
+    with open("variables.json", 'r') as file:
         data = json.load(file)
 
     if var == "spaceship_mass":
