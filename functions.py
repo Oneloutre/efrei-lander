@@ -60,7 +60,6 @@ def bezier(surf, b, samples, color):
 
 def generer_plateforme(screen):
     largeur_plateforme, hauteur_plateforme = platform_properties()
-    # Generate x1 and x2 such that x1 is always less than x2
     x1 = random.randint(0, screen.get_width() - 3 * largeur_plateforme - 85)
     x2 = random.randint(x1 + largeur_plateforme + 85, screen.get_width() - 2 * largeur_plateforme)
 
@@ -92,12 +91,14 @@ def generer_montagne(screen, x1, x2, y1, y2):
 def fill_mountain(screen):
     couleur_montagne = mountain_reloading()
     couleur_blanc = platform_reloading()
+    pts = []
     for i in range(screen.get_width() - 1):
         pixel_xy = i, screen.get_height() - 1
         while (screen.get_at(pixel_xy) != couleur_montagne) and (screen.get_at(pixel_xy) != couleur_blanc):
             pixel_xy = pixel_xy[0], pixel_xy[1] - 1
         pygame.draw.line(screen, couleur_montagne, pixel_xy, (i, screen.get_height() - 1))
-
+        pts.append(pixel_xy)
+    return pts
 
 def get_relief_coord(screen):
     relief_coord = []
@@ -105,7 +106,21 @@ def get_relief_coord(screen):
         pixel_xy = i, screen.get_height() - 1
         couleur_montagne = mountain_reloading()
         couleur_blanc = platform_reloading()
-        while (screen.get_at(pixel_xy) == couleur_montagne) or (screen.get_at(pixel_xy) == couleur_blanc):
+        while (screen.get_at(pixel_xy) == couleur_blanc):
             pixel_xy = pixel_xy[0], pixel_xy[1] - 1
-        relief_coord.append(pixel_xy[1] + 1)
+        relief_coord.append(pixel_xy)
     return relief_coord
+
+
+def get_platform_coord(x1, y1, x2, y2):
+    coords = []
+    platform_prop = platform_properties()
+    platform_height = platform_prop[1]
+    platform_width = platform_prop[0]
+    for i in range(platform_width):
+        pixel_xy1 = x1+i, y1+platform_height
+        pixel_xy2 = x2-i, y2+platform_height
+        coords.append(pixel_xy1)
+        coords.append(pixel_xy2)
+    return coords
+

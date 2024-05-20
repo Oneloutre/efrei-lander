@@ -19,7 +19,7 @@ font_play = pygame.font.Font("Assets/ethnocentric rg.otf", 30)
 font_menu = pygame.font.Font("Assets/ethnocentric rg.otf", 60)
 icon = pygame.image.load("Assets/lander.png")
 
-coord_relief = get_relief_coord(screen)
+
 
 
 
@@ -49,10 +49,7 @@ def game_launching():
     gravity = get_var("gravity")
     # icon rect
     icon_rect = icon.get_rect()
-    icon_rect.center = (size_x // 2, size_y // 2)
-    # clock initialization
-    #icon rect
-    icon_rect = icon.get_rect()
+    icon_rect.size = (88,81)
     icon_rect.center = (size_x // 2, size_y // 2)
     #clock initialization
     #Pre-valls
@@ -62,13 +59,15 @@ def game_launching():
     z_pressed = False
     velocity_x = 0
     velocity_y = 0
-
+    generated_cords = False
     image_lune = pygame.image.load('Assets/planet.png').convert_alpha()
     image_lune = pygame.transform.scale(image_lune, (rayon_lune * 2, rayon_lune * 2))  # Ajuster la taille de l'image
     running = True
     screen.blit(background_image, (0, 0))
     x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
-    mountain_coords = get_relief_coord(screen)
+
+
+
     largeur_plateforme = get_var("platform_width")
     thrust = get_var("spaceship_thrust")
     while running:
@@ -78,11 +77,21 @@ def game_launching():
         screen.blit(image_lune, (x_lune - rayon_lune, y_lune - rayon_lune))
 
         dessiner_plateforme(x1, x2, y1, y2, screen)
+        if not generated_cords:
+            platform_coords = get_platform_coord(x1, y1, x2, y2)
+            print(platform_coords)
+            generated_cords = True
+
+
         generer_montagne(screen, x1, x2, y1, y2)
         generer_montagne(screen, x2, 1280, y2, 650)
         generer_montagne(screen, 0 - largeur_plateforme, x1, 500, y1)
 
-        fill_mountain(screen)
+        mountain_coords = fill_mountain(screen)
+
+
+
+
         rotated_icon = pygame.transform.rotate(icon, angle)
         rotated_rect = rotated_icon.get_rect(center=icon_rect.center)
 
@@ -131,14 +140,20 @@ def game_launching():
         icon_rect.x += velocity_x
         icon_rect.y += velocity_y
 
-
+        lander_coord = (lander_x,lander_y)
         # PARTIE DE LA FONCTION COLLISION / WIN OR LOSE :
-        if coord_relief[lander_x] == lander_y:
-            collision = True
-            print(collision)
-            if (x1 <= lander_x and lander_x <= x1 + 100) or (x2 <= lander_x and lander_x <= x2 + 100):
-                if (angle <= 10 or -10 <= angle) and (velocity_x >= -20 or velocity_x <= 20) and (velocity_y >= -20 or velocity_y <= 20) :
+        for point in mountain_coords:
+            if icon_rect.collidepoint(point):
+                collision = True
+
+        for point in platform_coords:
+            if icon_rect.collidepoint(point):
+                if (angle <= 10 and angle >= -10) and (velocity_x >= -20 and velocity_x <= 20) and (velocity_y >= -20 and velocity_y <= 20) :
                     safe_landing = True
+                    print("safe_landing",angle,velocity_x,velocity_y)
+                else:
+                    print("unsafe_landing",angle,velocity_x,velocity_y)
+
 
 
         #IMPORTANT : on devra tweak les valeurs min max de angle et velocity selon nos gouts pour que ce soit jouable
