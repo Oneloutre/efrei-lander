@@ -17,6 +17,10 @@ font = pygame.font.Font("Assets/ethnocentric rg.otf",16)
 font_play = pygame.font.Font("Assets/ethnocentric rg.otf",30)
 font_menu = pygame.font.Font("Assets/ethnocentric rg.otf",60)
 icon = pygame.image.load("Assets/lander.png")
+collision = False
+safe_landing = False
+coord_relief = get_relief_coord(screen)
+
 
 def game_launching():
     pygame.display.set_caption("Efrei Lander")
@@ -31,13 +35,14 @@ def game_launching():
     fuel = get_var("spaceship_fuel")
     #angle de départ
     angle = 0
+    # icon rect
+    icon_rect = icon.get_rect()
+    icon_rect.center = (size_x // 2, size_y // 2)
+    lander_x, lander_y = icon_rect.x, icon_rect.y
     #vitesse de départ
     speed = 5
     #gravité
     gravity = get_var("gravity")
-    #icon rect
-    icon_rect = icon.get_rect()
-    icon_rect.center = (size_x // 2, size_y // 2)
     #clock initialization
     clock = pygame.time.Clock()
     #Pre-valls
@@ -117,6 +122,14 @@ def game_launching():
         icon_rect.x += velocity_x
         icon_rect.y += velocity_y
 
+
+        # PARTIE DE LA FONCTION COLLISION / WIN OR LOSE :
+        if coord_relief[lander_x] == lander_y:
+            collision = True
+            if (x1 <= lander_x and lander_x <= x1 + 100) or (x2 <= lander_x and lander_x <= x2 + 100):
+                if (angle <= 10 or -10 <= angle) and (velocity_x >= -20 or velocity_x <= 20) and (velocity_y >= -20 or velocity_y <= 20) :
+                    safe_landing = True
+        #IMPORTANT : on devra tweak les valeurs min max de angle et velocity selon nos gouts pour que ce soit jouable
         pygame.display.flip()
         clock.tick(60)
 
@@ -200,3 +213,6 @@ def guide_ui():
                 if play_rect.collidepoint((mouse_x, mouse_y)):
                     return
         pygame.display.update()
+
+
+
