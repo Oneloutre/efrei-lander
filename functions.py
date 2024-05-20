@@ -51,6 +51,7 @@ def ptOnCurve(b, t):
     return round(q[0][0]), round(q[0][1])
 
 
+
 def bezier(surf, b, samples, color):
     hauteur_plateforme = platform_properties()[1]
     pts = [ptOnCurve(b, i / samples) for i in range(samples + 1)]
