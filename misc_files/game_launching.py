@@ -7,18 +7,25 @@ size_x = get_var("screen_width")
 size_y = get_var("screen_height")
 
 screen = pygame.display.set_mode((size_x, size_y))
-#Assets
+# Assets
 background_image = pygame.image.load("Assets/space.png").convert()
 fuel_image = pygame.image.load("Assets/fuel.png").convert_alpha()
 main_bg = pygame.image.load("Assets/menu bg.png").convert()
 guide_img = pygame.image.load("Assets/guide.png").convert()
-#text
-font = pygame.font.Font("Assets/ethnocentric rg.otf",16)
-font_play = pygame.font.Font("Assets/ethnocentric rg.otf",30)
-font_menu = pygame.font.Font("Assets/ethnocentric rg.otf",60)
+btn_img = pygame.image.load("Assets/btn.png").convert_alpha()
+# text
+font = pygame.font.Font("Assets/ethnocentric rg.otf", 16)
+font_play = pygame.font.Font("Assets/ethnocentric rg.otf", 30)
+font_menu = pygame.font.Font("Assets/ethnocentric rg.otf", 60)
 icon = pygame.image.load("Assets/lander.png")
+collision = False
+safe_landing = False
+coord_relief = get_relief_coord(screen)
+
+
 
 def game_launching():
+    thrust = get_var("spaceship_thrust")
     pygame.display.set_caption("Efrei Lander")
     #Pour les étoiles
     etoiles = [(random.randint(0, size_x), random.randint(0, size_y)) for _ in range(100)]
@@ -27,21 +34,27 @@ def game_launching():
     y_lune = size_y
     # Rayon de la lune
     rayon_lune = get_var("moon_radius")
-    #fuel du vaisseau
+    # fuel du vaisseau
     fuel = get_var("spaceship_fuel")
-    #angle de départ
+    # angle de départ
     angle = 0
+    # icon rect
+    icon_rect = icon.get_rect()
+    icon_rect.center = (size_x // 2, size_y // 2)
+    lander_x, lander_y = icon_rect.x, icon_rect.y
     #vitesse de départ
     speed = 5
-    #gravité
+    # gravité
     gravity = get_var("gravity")
+    # icon rect
+    icon_rect = icon.get_rect()
+    icon_rect.center = (size_x // 2, size_y // 2)
+    # clock initialization
     #icon rect
     icon_rect = icon.get_rect()
     icon_rect.center = (size_x // 2, size_y // 2)
     #clock initialization
-    clock = pygame.time.Clock()
     #Pre-valls
-    user_impact = 0
     right_pressed = False
     left_pressed = False
     up_pressed = False
@@ -50,13 +63,13 @@ def game_launching():
     velocity_y = 0
 
     image_lune = pygame.image.load('Assets/planet.png').convert_alpha()
-    image_lune = pygame.transform.scale(image_lune, (rayon_lune*2, rayon_lune*2))  # Ajuster la taille de l'image
+    image_lune = pygame.transform.scale(image_lune, (rayon_lune * 2, rayon_lune * 2))  # Ajuster la taille de l'image
     running = True
     screen.blit(background_image, (0, 0))
     x1, x2, y1, y2, hauteur_plateforme = generer_plateforme(screen)
     mountain_coords = get_relief_coord(screen)
     largeur_plateforme = get_var("platform_width")
-
+    thrust = get_var("spaceship_thrust")
     while running:
 
         screen.blit(background_image, (0, 0))
@@ -101,14 +114,14 @@ def game_launching():
 
         if z_pressed and fuel != 0:
             fuel -= 1
-            pygame.time.delay(30)
+            pygame.time.delay(thrust)
         pygame.display.update()
         if left_pressed:
-            angle += 1
+            angle += 5
         if right_pressed:
-            angle -= 1
+            angle -= 5
 
-        if up_pressed:
+        if up_pressed and fuel != 0:
             velocity_x = -speed * math.sin(math.radians(angle))
             velocity_y = -speed * math.cos(math.radians(angle))
             user_impact = 0.2
@@ -117,8 +130,17 @@ def game_launching():
         icon_rect.x += velocity_x
         icon_rect.y += velocity_y
 
+
+        # PARTIE DE LA FONCTION COLLISION / WIN OR LOSE :
+        if coord_relief[lander_x] == lander_y:
+            collision = True
+            print(collision)
+            if (x1 <= lander_x and lander_x <= x1 + 100) or (x2 <= lander_x and lander_x <= x2 + 100):
+                if (angle <= 10 or -10 <= angle) and (velocity_x >= -20 or velocity_x <= 20) and (velocity_y >= -20 or velocity_y <= 20) :
+                    safe_landing = True
+
+        #IMPORTANT : on devra tweak les valeurs min max de angle et velocity selon nos gouts pour que ce soit jouable
         pygame.display.flip()
-        clock.tick(60)
 
 
 
@@ -131,6 +153,8 @@ def main_menu():
     while menu_running:
         # background
         screen.blit(main_bg, (0, 0))
+        screen.blit(btn_img, (533, 345))
+        screen.blit(btn_img, (533, 435))
 
         # title
 
@@ -149,13 +173,13 @@ def main_menu():
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
         if play_rect.collidepoint((mouse_x, mouse_y)):
-            play_text = font_play.render("Play", True, (17, 119, 182))
+            play_text = font_play.render("Play", True, (225, 216, 133))
             play_rect = play_text.get_rect()
             play_rect.topleft = (580, size_y / 2)
             screen.blit(play_text, play_rect)
 
         if guide_rect.collidepoint((mouse_x, mouse_y)):
-            guide_text = font_play.render("Guide", True, (17, 119, 182))
+            guide_text = font_play.render("Guide", True, (225, 216, 133))
             guide_rect = guide_text.get_rect()
             guide_rect.topleft = (575, 450)
             screen.blit(guide_text, guide_rect)
@@ -178,19 +202,19 @@ def guide_ui():
 
     while running:
         screen.blit(guide_img, (0, 0))
+        screen.blit(btn_img, (100, 585))
 
-
-        play_text = font_play.render("Back", True, (0, 0, 0))
+        play_text = font_play.render("Back", True, (255, 255, 255))
         play_rect = play_text.get_rect()
-        play_rect.topleft = (100, 600)
+        play_rect.topleft = (150, 600)
         screen.blit(play_text, play_rect)
 
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
         if play_rect.collidepoint((mouse_x, mouse_y)):
-            play_text = font_play.render("Back", True, (17, 119, 182))
+            play_text = font_play.render("Back", True, (255, 216, 133))
             play_rect = play_text.get_rect()
-            play_rect.topleft = (100, 600)
+            play_rect.topleft = (150, 600)
             screen.blit(play_text, play_rect)
 
         for event in pygame.event.get():
@@ -200,3 +224,6 @@ def guide_ui():
                 if play_rect.collidepoint((mouse_x, mouse_y)):
                     return
         pygame.display.update()
+
+
+

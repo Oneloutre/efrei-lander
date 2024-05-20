@@ -1,13 +1,9 @@
-import sys
-
 import pygame
 
-def guide_ui(screen,font):
+
+def guide_ui(screen, font):
     running = True
     guide_img = pygame.image.load("../Assets/guide.png").convert()
-
-
-
     while running:
         screen.blit(guide_img, (0, 0))
         play_text = font.render("Back", True, (0, 0, 0))
@@ -29,4 +25,3 @@ def guide_ui(screen,font):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if play_rect.collidepoint((mouse_x, mouse_y)):
                     return "menu"
-

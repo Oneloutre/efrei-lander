@@ -2,8 +2,8 @@
     "variables": {
         "spaceship": {
             "mass": 2000,
-            "fuel": 1000,
-            "thrust": 100
+            "fuel": 100,
+            "thrust": 30
         },
         "color": {
             "platform": {
@@ -20,7 +20,7 @@
         "environment": {
             "platform_width": 100,
             "platform_height": 5,
-            "gravity": 0.3,
+            "gravity": 0.2,
             "moon": {
                 "radius": 50,
                 "position": {
