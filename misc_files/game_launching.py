@@ -18,13 +18,14 @@ font = pygame.font.Font("Assets/ethnocentric rg.otf", 16)
 font_play = pygame.font.Font("Assets/ethnocentric rg.otf", 30)
 font_menu = pygame.font.Font("Assets/ethnocentric rg.otf", 60)
 icon = pygame.image.load("Assets/lander.png")
-collision = False
-safe_landing = False
+
 coord_relief = get_relief_coord(screen)
 
 
 
 def game_launching():
+    collision = False
+    safe_landing = False
     thrust = get_var("spaceship_thrust")
     pygame.display.set_caption("Efrei Lander")
     #Pour les étoiles
@@ -138,6 +139,7 @@ def game_launching():
             if (x1 <= lander_x and lander_x <= x1 + 100) or (x2 <= lander_x and lander_x <= x2 + 100):
                 if (angle <= 10 or -10 <= angle) and (velocity_x >= -20 or velocity_x <= 20) and (velocity_y >= -20 or velocity_y <= 20) :
                     safe_landing = True
+
 
         #IMPORTANT : on devra tweak les valeurs min max de angle et velocity selon nos gouts pour que ce soit jouable
         pygame.display.flip()
