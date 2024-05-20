@@ -117,9 +117,9 @@ def get_platform_coord(x1, y1, x2, y2):
     platform_prop = platform_properties()
     platform_height = platform_prop[1]
     platform_width = platform_prop[0]
-    for i in range(platform_width):
-        pixel_xy1 = x1+i, y1+platform_height
-        pixel_xy2 = x2-i, y2+platform_height
+    for i in range(-10,platform_width+10):
+        pixel_xy1 = x1+i, y1+platform_height-10
+        pixel_xy2 = x2-i, y2+platform_height-10
         coords.append(pixel_xy1)
         coords.append(pixel_xy2)
     return coords

@@ -13,12 +13,16 @@ fuel_image = pygame.image.load("Assets/fuel.png").convert_alpha()
 main_bg = pygame.image.load("Assets/menu bg.png").convert()
 guide_img = pygame.image.load("Assets/guide.png").convert()
 btn_img = pygame.image.load("Assets/btn.png").convert_alpha()
+crash_img = pygame.image.load("Assets/crash.png").convert()
+success_img = pygame.image.load("Assets/success.png").convert()
 # text
 font = pygame.font.Font("Assets/ethnocentric rg.otf", 16)
 font_play = pygame.font.Font("Assets/ethnocentric rg.otf", 30)
 font_menu = pygame.font.Font("Assets/ethnocentric rg.otf", 60)
 icon = pygame.image.load("Assets/lander.png")
-
+icon = pygame.transform.scale(icon, (50, 50))
+couleur_montagne = mountain_reloading()
+couleur_plateforme = platform_reloading()
 
 
 
@@ -26,6 +30,7 @@ icon = pygame.image.load("Assets/lander.png")
 def game_launching():
     collision = False
     safe_landing = False
+    crashed = False
     thrust = get_var("spaceship_thrust")
     pygame.display.set_caption("Efrei Lander")
     #Pour les étoiles
@@ -39,18 +44,16 @@ def game_launching():
     fuel = get_var("spaceship_fuel")
     # angle de départ
     angle = 0
-    # icon rect
-    icon_rect = icon.get_rect()
-    icon_rect.center = (size_x // 2, size_y // 2)
-    lander_x, lander_y = icon_rect.x, icon_rect.y
+
     #vitesse de départ
-    speed = 5
+    speed = 3
     # gravité
     gravity = get_var("gravity")
     # icon rect
     icon_rect = icon.get_rect()
-    icon_rect.size = (88,81)
+    icon_rect.size = (50,50)
     icon_rect.center = (size_x // 2, size_y // 2)
+    lander_x, lander_y = icon_rect.x, icon_rect.y
     #clock initialization
     #Pre-valls
     right_pressed = False
@@ -74,7 +77,7 @@ def game_launching():
 
         screen.blit(background_image, (0, 0))
 
-        screen.blit(image_lune, (x_lune - rayon_lune, y_lune - rayon_lune))
+        screen.blit(image_lune, (1100,50))
 
         dessiner_plateforme(x1, x2, y1, y2, screen)
         if not generated_cords:
@@ -88,7 +91,7 @@ def game_launching():
         generer_montagne(screen, 0 - largeur_plateforme, x1, 500, y1)
 
         mountain_coords = fill_mountain(screen)
-
+        mountain_coords_filtered = [item for item in mountain_coords if item not in platform_coords]
 
 
 
@@ -127,14 +130,14 @@ def game_launching():
             pygame.time.delay(thrust)
         pygame.display.update()
         if left_pressed:
-            angle += 5
+            angle = (angle + 5) % 360
         if right_pressed:
-            angle -= 5
+            angle = (angle - 5) % 360
 
         if up_pressed and fuel != 0:
-            velocity_x = -speed * math.sin(math.radians(angle))
-            velocity_y = -speed * math.cos(math.radians(angle))
-            user_impact = 0.2
+            velocity_x -= speed * math.sin(math.radians(angle)) / 4
+            velocity_y -= speed * math.cos(math.radians(
+                angle)) / 2  # On divise par 2 et 4 pour réduire l'impact du joueur sur la vitesse (trop rapide / trop lent)
 
         velocity_y += gravity
         icon_rect.x += velocity_x
@@ -142,17 +145,30 @@ def game_launching():
 
         lander_coord = (lander_x,lander_y)
         # PARTIE DE LA FONCTION COLLISION / WIN OR LOSE :
-        for point in mountain_coords:
-            if icon_rect.collidepoint(point):
-                collision = True
-
         for point in platform_coords:
-            if icon_rect.collidepoint(point):
+            betterpoint = point[0] +10, point[1]+5
+            if icon_rect.collidepoint(betterpoint):
                 if (angle <= 10 and angle >= -10) and (velocity_x >= -20 and velocity_x <= 20) and (velocity_y >= -20 and velocity_y <= 20) :
                     safe_landing = True
                     print("safe_landing",angle,velocity_x,velocity_y)
+                    return "success"
+
                 else:
+                    safe_landing = False
                     print("unsafe_landing",angle,velocity_x,velocity_y)
+                    return "crash"
+
+        for point in mountain_coords_filtered:
+
+            if icon_rect.collidepoint(point):
+                print("crash")
+                return "crash"
+
+
+
+
+
+
 
 
 
@@ -242,5 +258,67 @@ def guide_ui():
                     return
         pygame.display.update()
 
+def crash():
+    crash_r = True
+    while crash_r:
+        screen.blit(crash_img, (0, 0))
 
 
+
+        # guide_text
+        guide_text = font_play.render("Menu", True, (255, 255, 255))
+        guide_rect = guide_text.get_rect()
+        guide_rect.topleft = (575, 340)
+        screen.blit(guide_text, guide_rect)
+
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+
+
+        if guide_rect.collidepoint((mouse_x, mouse_y)):
+            guide_text = font_play.render("Menu", True, (225, 216, 133))
+            guide_rect = guide_text.get_rect()
+            guide_rect.topleft = (575, 340)
+            screen.blit(guide_text, guide_rect)
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if guide_rect.collidepoint((mouse_x, mouse_y)):
+                    return "menu"
+        pygame.display.update()
+
+
+def success():
+    crash_r = True
+    while crash_r:
+        screen.blit(success_img, (0, 0))
+
+
+
+        # guide_text
+        guide_text = font_play.render("Menu", True, (255, 255, 255))
+        guide_rect = guide_text.get_rect()
+        guide_rect.topleft = (575, 340)
+        screen.blit(guide_text, guide_rect)
+
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+
+
+        if guide_rect.collidepoint((mouse_x, mouse_y)):
+            guide_text = font_play.render("Menu", True, (225, 216, 133))
+            guide_rect = guide_text.get_rect()
+            guide_rect.topleft = (575, 340)
+            screen.blit(guide_text, guide_rect)
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if guide_rect.collidepoint((mouse_x, mouse_y)):
+                    return "menu"
+        pygame.display.update()
