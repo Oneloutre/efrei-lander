@@ -100,16 +100,7 @@ def fill_mountain(screen):
         pts.append(pixel_xy)
     return pts
 
-def get_relief_coord(screen):
-    relief_coord = []
-    for i in range(screen.get_width() - 1):
-        pixel_xy = i, screen.get_height() - 1
-        couleur_montagne = mountain_reloading()
-        couleur_blanc = platform_reloading()
-        while (screen.get_at(pixel_xy) == couleur_blanc):
-            pixel_xy = pixel_xy[0], pixel_xy[1] - 1
-        relief_coord.append(pixel_xy)
-    return relief_coord
+
 
 
 def get_platform_coord(x1, y1, x2, y2):

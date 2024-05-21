@@ -130,9 +130,10 @@ def game_launching():
             pygame.time.delay(thrust)
         pygame.display.update()
         if left_pressed:
-            angle = (angle + 5) % 360
+            angle = angle + 5
         if right_pressed:
-            angle = (angle - 5) % 360
+            angle = angle - 5
+
 
         if up_pressed and fuel != 0:
             velocity_x -= speed * math.sin(math.radians(angle)) / 6
