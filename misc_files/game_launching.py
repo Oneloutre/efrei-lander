@@ -135,9 +135,9 @@ def game_launching():
             angle = (angle - 5) % 360
 
         if up_pressed and fuel != 0:
-            velocity_x -= speed * math.sin(math.radians(angle)) / 4
+            velocity_x -= speed * math.sin(math.radians(angle)) / 6
             velocity_y -= speed * math.cos(math.radians(
-                angle)) / 2  # On divise par 2 et 4 pour réduire l'impact du joueur sur la vitesse (trop rapide / trop lent)
+                angle)) / 3  # On divise par 2 et 4 pour réduire l'impact du joueur sur la vitesse (trop rapide / trop lent)
 
         velocity_y += gravity
         icon_rect.x += velocity_x
